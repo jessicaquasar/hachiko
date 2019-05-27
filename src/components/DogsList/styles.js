@@ -22,7 +22,7 @@ export const Dogs = styled.div`
     padding: 30px;
 
     img {
-      width: 64px;
+      width: 100%;
     }
 
     strong {
@@ -33,26 +33,6 @@ export const Dogs = styled.div`
     small {
       color: #666;
       font-size: 14px;
-    }
-  }
-
-  ul {
-    list-style: none;
-
-    li {
-      font-weight: bold;
-      padding: 12px 20px;
-
-      small {
-        color: #999;
-        font-weight: normal;
-        font-size: 12px;
-        font-style: italic;
-      }
-
-      &:nth-child(2n -1) {
-        background-color: #f5f5f5;
-      }
     }
   }
 `;

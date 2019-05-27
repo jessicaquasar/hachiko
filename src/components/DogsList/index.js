@@ -1,53 +1,34 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import moment from "moment";
+
 import { Container, Dogs } from "./styles";
 
-const DogsList = ({ dogsList }) => (
+const DogsL = ({ dogsList }) => (
   <Container>
-    <p>{dogsList}</p>
-    {/* {dogs.map(dog => (
-      <Dogs key={dog.id}>
+    {dogsList.map((dog, index) => (
+      <Dogs key={index}>
         <header>
-          <img src={dog.owner.avatar_url} alt={dog.owner.login} />
+          <img src={dog.img} alt={dog.name} />
           <strong>{dog.name}</strong>
-          <small>{dog.owner.login}</small>
+          <small>{dog.breed}</small>
+          <small>{moment(dog.date).format("LLL")}</small>
         </header>
-
-        <ul>
-          <li>
-            {dog.stargazers_count} <small>starts</small>
-          </li>
-          <li>
-            {dog.forks_count} <small>forks</small>
-          </li>
-          <li>
-            {dog.open_issues_count} <small>issues</small>
-          </li>
-          <li>
-            {dog.lastCommit} <small>last commit</small>
-          </li>
-        </ul>
       </Dogs>
-    ))} */}
+    ))}
   </Container>
 );
 
-DogsList.propTypes = {
-  dogs: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      owner: PropTypes.shape({
-        login: PropTypes.string,
-        avatar_url: PropTypes.string
-      })
-      // stargazers_count: PropTypes.number,
-      // forks_count: PropTypes.number,
-      // open_issues_count: PropTypes.number,
-      // pushed_at: PropTypes.string
-    })
-  ).isRequired
-};
+// DogsList.propTypes = {
+//   dogs: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       name: PropTypes.string,
+//       img: PropTypes.string,
+//       breed: PropTypes.string,
+//       date: PropTypes.date
+//     })
+//   ).isRequired
+// };
 
-export default DogsList;
+export default DogsL;

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import moment from "moment";
 
 import { Wrapper, Form } from "./styles";
 
@@ -7,45 +6,71 @@ import image from "../../assets/akita.png";
 
 import DogsList from "../../components/DogsList";
 import api from "../../services/api";
+import { className } from "postcss-selector-parser";
 
 export default class Home extends Component {
   state = {
     breeds: [],
+    dogNameInput: "",
     dogsList: [],
-    dogNameInput: ""
+    selectedValue: ""
   };
 
   componentDidMount() {
     api
-      .get(`/list/all`)
+      .get(`breeds/list/all`)
       .then(response => {
-        console.log(response);
+        const arrResult = Object.entries(response.data.message).map(breed => {
+          if (breed[1].length) {
+            return breed[1].map(b => `${breed[0]}-${b}`);
+          } else {
+            return [breed[0]];
+          }
+        });
+
+        const arrBreeds = arrResult.flatMap(breed => breed);
+
         this.setState({
-          breeds: response.data.message
+          breeds: arrBreeds
         });
       })
       .catch(error => console.log(error.response));
   }
 
-  handleAddDog = e => {
+  handleBreeds = breed =>
+    api
+      .get(`breed/${breed}/images/random`)
+      .then(response => response.data.message)
+      .catch(error => console.log(error.response));
+
+  handleAddDog = async e => {
     e.preventDefault();
 
-    const { dogNameInput, dogsList } = this.state;
+    const { dogNameInput, selectedValue, dogsList } = this.state;
+    console.log(dogsList);
 
-    const hour = new Date();
+    const dogImage = await this.handleBreeds(selectedValue);
+    const newDogs = {
+      breed: selectedValue,
+      date: new Date(),
+      name: dogNameInput,
+      img: dogImage
+    };
 
-    // const hour = hour.moment().format('LLL')
+    let listDog = dogsList;
+
+    listDog.push(newDogs);
 
     this.setState({
-      dogsList: dogNameInput,
-      dogNameInput: ""
+      dogNameInput: "",
+      dogsList: listDog
     });
 
-    localStorage.setItem("dogs", JSON.stringify(dogNameInput));
+    localStorage.setItem("dogs", JSON.stringify(listDog));
   };
 
   render() {
-    const { breeds, dogsList, dogNameInput } = this.state;
+    const { breeds, dogsList, dogNameInput, selectedValue } = this.state;
 
     return (
       <Wrapper>
@@ -58,12 +83,14 @@ export default class Home extends Component {
             value={dogNameInput}
             onChange={e => this.setState({ dogNameInput: e.target.value })}
           />
-          <select value={this.state.breeds} onChange={this.handleChange}>
-            {breeds &&
-              breeds.length > 0 &&
-              breeds.map(breed => {
-                return <option> {breed.data.message}</option>;
-              })}
+          <select
+            value={selectedValue}
+            onChange={e => this.setState({ selectedValue: e.target.value })}
+          >
+            <option value="">Raça</option>
+            {breeds.map(breed => {
+              return <option value={breed}>{breed}</option>;
+            })}
           </select>
           <button type="submit">Cadastrar</button>
         </Form>
