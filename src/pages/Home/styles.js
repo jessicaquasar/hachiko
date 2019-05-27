@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
 
 export const Form = styled.form`
   display: flex;
-  max-width: 400px;
+  max-width: 650px;
   width: 100%;
 
   input {

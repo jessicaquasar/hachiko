@@ -20,15 +20,15 @@ const DogsL = ({ dogsList }) => (
   </Container>
 );
 
-// DogsList.propTypes = {
-//   dogs: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       name: PropTypes.string,
-//       img: PropTypes.string,
-//       breed: PropTypes.string,
-//       date: PropTypes.date
-//     })
-//   ).isRequired
-// };
+DogsL.propTypes = {
+  dog: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      img: PropTypes.string,
+      breed: PropTypes.string,
+      date: PropTypes.date
+    })
+  ).isRequired
+};
 
 export default DogsL;
