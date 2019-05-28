@@ -59,3 +59,20 @@ export const Form = styled.form`
     -webkit-appearance: none;
   }
 `;
+
+export const ModalInner = styled.div`
+  color: #90536b;
+  height: 200px;
+  padding: 20px;
+  text-align: center;
+  width: 300px;
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  a {
+    color: #cac7cc;
+    text-decoration: none;
+  }
+`;

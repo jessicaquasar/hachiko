@@ -3,8 +3,10 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   margin-top: 50px;
+  max-width: 1100px;
 `;
 
 export const Dogs = styled.div`
@@ -12,7 +14,7 @@ export const Dogs = styled.div`
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  margin: 0 10px;
+  margin: 10px 10px;
   width: 250px;
 
   header {
@@ -26,6 +28,7 @@ export const Dogs = styled.div`
     }
 
     strong {
+      color: #90536b;
       font-size: 24px;
       margin-top: 10px;
     }

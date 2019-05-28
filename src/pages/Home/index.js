@@ -1,19 +1,20 @@
 import React, { Component } from "react";
+import Modal from "react-awesome-modal";
 
-import { Wrapper, Form } from "./styles";
+import { Wrapper, Form, ModalInner } from "./styles";
 
 import image from "../../assets/akita.png";
 
 import DogsList from "../../components/DogsList";
 import api from "../../services/api";
-import { className } from "postcss-selector-parser";
 
 export default class Home extends Component {
   state = {
     breeds: [],
     dogNameInput: "",
     dogsList: [],
-    selectedValue: ""
+    selectedValue: "",
+    visible: false
   };
 
   componentDidMount() {
@@ -47,7 +48,6 @@ export default class Home extends Component {
     e.preventDefault();
 
     const { dogNameInput, selectedValue, dogsList } = this.state;
-    console.log(dogsList);
 
     const dogImage = await this.handleBreeds(selectedValue);
     const newDogs = {
@@ -63,11 +63,26 @@ export default class Home extends Component {
 
     this.setState({
       dogNameInput: "",
-      dogsList: listDog
+      dogsList: listDog,
+      selectedValue: ""
     });
+
+    this.openModal();
 
     localStorage.setItem("dogs", JSON.stringify(listDog));
   };
+
+  openModal() {
+    this.setState({
+      visible: true
+    });
+  }
+
+  closeModal() {
+    this.setState({
+      visible: false
+    });
+  }
 
   render() {
     const { breeds, dogsList, dogNameInput, selectedValue } = this.state;
@@ -89,11 +104,28 @@ export default class Home extends Component {
           >
             <option value="">Raça</option>
             {breeds.map(breed => {
-              return <option value={breed}>{breed}</option>;
+              return (
+                <option value={breed} key={breed}>
+                  {breed}
+                </option>
+              );
             })}
           </select>
+
           <button type="submit">Cadastrar</button>
         </Form>
+        <Modal
+          visible={this.state.visible}
+          effect="fadeInUp"
+          onClickAway={() => this.closeModal()}
+        >
+          <ModalInner>
+            <h1>Cãozinho cadastrado com sucesso!</h1>
+            <a href="javascript:void(0)" onClick={() => this.closeModal()}>
+              Fechar
+            </a>
+          </ModalInner>
+        </Modal>
         <DogsList dogsList={dogsList} />
       </Wrapper>
     );

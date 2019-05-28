@@ -21,7 +21,7 @@ const DogsL = ({ dogsList }) => (
 );
 
 DogsL.propTypes = {
-  dog: PropTypes.arrayOf(
+  dogsList: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
       img: PropTypes.string,
