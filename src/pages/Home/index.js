@@ -1,23 +1,17 @@
-import React, { Component } from "react";
-import Modal from "react-awesome-modal";
-
-import { Wrapper, Form, ModalInner } from "./styles";
-
-import image from "../../assets/akita.png";
-
-import DogsList from "../../components/DogsList";
+import React, { useEffect, useState } from "react";
 import api from "../../services/api";
+import { Header, Form } from "./styles";
+import doggyImage from "../../assets/doggy.png";
+import DogsList from "../../components/DogsList";
 
-export default class Home extends Component {
-  state = {
-    breeds: [],
-    dogNameInput: "",
-    dogsList: [],
-    selectedValue: "",
-    visible: false
-  };
+export const Home = () =>  {
 
-  componentDidMount() {
+  const [breeds, setBreeds] = useState([]);
+  const [dogName, setDogName] = useState('');
+  const [dogsList, setDogsList] = useState([]);
+  const [selectedValue, setSelectedValue] = useState('');
+
+  useEffect(() => {
     api
       .get(`breeds/list/all`)
       .then(response => {
@@ -31,29 +25,26 @@ export default class Home extends Component {
 
         const arrBreeds = arrResult.flatMap(breed => breed);
 
-        this.setState({
-          breeds: arrBreeds
-        });
+        setBreeds(arrBreeds);
       })
       .catch(error => console.log(error.response));
-  }
 
-  handleBreeds = breed =>
+  }, []);
+
+  const handleBreeds = breed =>
     api
       .get(`breed/${breed}/images/random`)
       .then(response => response.data.message)
       .catch(error => console.log(error.response));
 
-  handleAddDog = async e => {
+  const handleAddDog = async e => {
     e.preventDefault();
 
-    const { dogNameInput, selectedValue, dogsList } = this.state;
-
-    const dogImage = await this.handleBreeds(selectedValue);
+    const dogImage = await handleBreeds(selectedValue);
     const newDogs = {
       breed: selectedValue,
       date: new Date(),
-      name: dogNameInput,
+      name: dogName,
       img: dogImage
     };
 
@@ -61,73 +52,45 @@ export default class Home extends Component {
 
     listDog.push(newDogs);
 
-    this.setState({
-      dogNameInput: "",
-      dogsList: listDog,
-      selectedValue: ""
-    });
+    setDogName('');
+    setDogsList(listDog);
+    setSelectedValue('');
 
-    this.openModal();
 
     localStorage.setItem("dogs", JSON.stringify(listDog));
   };
 
-  openModal() {
-    this.setState({
-      visible: true
-    });
-  }
-
-  closeModal() {
-    this.setState({
-      visible: false
-    });
-  }
-
-  render() {
-    const { breeds, dogsList, dogNameInput, selectedValue } = this.state;
-
-    return (
-      <Wrapper>
-        <img src={image} alt="Hachiko" />
-
-        <Form onSubmit={e => this.handleAddDog(e)}>
-          <input
-            type="text"
-            placeholder="nome do cãozinho"
-            value={dogNameInput}
-            onChange={e => this.setState({ dogNameInput: e.target.value })}
-          />
-          <select
-            value={selectedValue}
-            onChange={e => this.setState({ selectedValue: e.target.value })}
-          >
-            <option value="">Raça</option>
-            {breeds.map(breed => {
-              return (
-                <option value={breed} key={breed}>
-                  {breed}
-                </option>
-              );
-            })}
-          </select>
-
-          <button type="submit">Cadastrar</button>
-        </Form>
-        <Modal
-          visible={this.state.visible}
-          effect="fadeInUp"
-          onClickAway={() => this.closeModal()}
+  return (
+    <>
+      <Header>
+        <img src={doggyImage} alt="doggyImage" />
+        <h1>Dogs register</h1>
+      </Header>
+      <Form onSubmit={e => handleAddDog(e)}>
+        <label>dog name:</label>
+        <input
+          type="text"
+          placeholder="type something..."
+          value={dogName}
+          onChange={e => setDogName(e.target.value)}
+        />
+        <label>dog breed:</label>
+        <select
+          value={selectedValue}
+          onChange={e => setSelectedValue(e.target.value)}
         >
-          <ModalInner>
-            <h1>Cãozinho cadastrado com sucesso!</h1>
-            <a href="javascript:void(0)" onClick={() => this.closeModal()}>
-              Fechar
-            </a>
-          </ModalInner>
-        </Modal>
-        <DogsList dogsList={dogsList} />
-      </Wrapper>
-    );
-  }
+          <option value="">select something...</option>
+          {breeds.map(breed => {
+            return (
+              <option value={breed} key={breed}>
+                {breed}
+              </option>
+            );
+          })}
+        </select>
+        <button type="submit" disabled={!dogName}>save</button>
+      </Form>
+      <DogsList dogsList={dogsList} />
+    </>
+  );
 }

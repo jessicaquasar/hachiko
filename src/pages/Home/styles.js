@@ -1,19 +1,34 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const Header = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
+  margin-bottom: 40px;
 
   img {
-    width: 16%;
+    height: 300px;
+    width: 300px;
   }
 `;
 
-export const Form = styled.form`
+  export const Form = styled.form`
+  align-items: center;
   display: flex;
-  max-width: 650px;
-  width: 100%;
+  flex-flow: row wrap;
+  font-size: 1em;
+  justify-content: center;
+  padding: 0 12px;
+
+  @media all and (max-width: 425px) {
+    justify-content: space-evenly;
+  }
+
+  label {
+    font-weight: bold;
+    line-height: 36px;
+    margin-right: 10px;
+  }
 
   input {
     background-color: #fff;
@@ -21,28 +36,44 @@ export const Form = styled.form`
     border-radius: 4px;
     color: #444;
     flex: 1;
-    font-size: 18px;
+    font-size: 1em;
     font-weight: bold;
     height: 50px;
     margin-right: 10px;
+    max-width: 300px;
+    width: 232px;
     padding: 0 20px;
+
+    @media all and (max-width: 425px) {
+      margin-bottom: 10px;
+      margin-right: 0;
+      width: 60vw;
+    }
   }
 
   button {
-    background-color: #bf8fb7;
+    background-color: #8D83FA;
     border: 0;
     border-radius: 4px;
     color: #fff;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 1em;
     font-weight: bold;
     height: 50px;
     margin-left: 10px;
     padding: 0 20px;
-    width: 100%;
 
     &:hover {
-      background-color: #ab6fa1;
+      background-color: #A282FA;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+
+    @media all and (max-width: 425px) {
+      margin-left: 0;
+      width: 100%;
     }
   }
 
@@ -52,27 +83,17 @@ export const Form = styled.form`
     border: 2px solid #aaadbf;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 1em;
     font-weight: bold;
     height: 50px;
     padding: 10px;
     -webkit-appearance: none;
-  }
-`;
+    width: 232px;
 
-export const ModalInner = styled.div`
-  color: #90536b;
-  height: 200px;
-  padding: 20px;
-  text-align: center;
-  width: 300px;
-
-  h1 {
-    margin-bottom: 20px;
-  }
-
-  a {
-    color: #cac7cc;
-    text-decoration: none;
+    @media all and (max-width: 425px) {
+      margin-bottom: 10px;
+      margin-left: 0;
+      width: 62vw;
+    }
   }
 `;
