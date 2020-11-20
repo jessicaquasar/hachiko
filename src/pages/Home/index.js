@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import api from "../../services/api";
 import { Header, Form } from "./styles";
 import doggyImage from "../../assets/doggy.png";
@@ -10,6 +10,7 @@ export const Home = () =>  {
   const [dogName, setDogName] = useState('');
   const [dogsList, setDogsList] = useState([]);
   const [selectedValue, setSelectedValue] = useState('');
+  const dogNameInput = useRef(null);
 
   useEffect(() => {
     api
@@ -30,6 +31,10 @@ export const Home = () =>  {
       .catch(error => console.log(error.response));
 
   }, []);
+
+  useEffect(() => {
+    dogNameInput.current.focus();
+  }, [dogName]);
 
   const handleBreeds = breed =>
     api
@@ -56,7 +61,6 @@ export const Home = () =>  {
     setDogsList(listDog);
     setSelectedValue('');
 
-
     localStorage.setItem("dogs", JSON.stringify(listDog));
   };
 
@@ -69,6 +73,7 @@ export const Home = () =>  {
       <Form onSubmit={e => handleAddDog(e)}>
         <label>dog name:</label>
         <input
+          ref={dogNameInput}
           type="text"
           placeholder="type something..."
           value={dogName}

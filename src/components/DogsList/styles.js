@@ -24,6 +24,7 @@ export const Dogs = styled.div`
     padding: 30px;
 
     img {
+      border-radius: 8px;
       height: auto;
       width: 100%;
     }
@@ -37,6 +38,7 @@ export const Dogs = styled.div`
     small {
       color: #666;
       font-size: 1em;
+      font-weight: 600;
     }
   }
 `;
