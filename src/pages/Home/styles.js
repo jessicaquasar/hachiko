@@ -52,20 +52,16 @@ export const Header = styled.div`
   }
 
   button {
-    background-color: #8D83FA;
+    background-color: #A69F80;
     border: 0;
     border-radius: 4px;
-    color: #fff;
+    color: #000;
     cursor: pointer;
     font-size: 1em;
     font-weight: bold;
     height: 50px;
     margin-left: 10px;
     padding: 0 20px;
-
-    &:hover {
-      background-color: #A282FA;
-    }
 
     &:disabled {
       opacity: 0.5;

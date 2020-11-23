@@ -28,7 +28,7 @@ export const Home = () =>  {
 
         setBreeds(arrBreeds);
       })
-      .catch(error => console.log(error.response));
+      .catch(error => console.log(error.response.data.message));
 
   }, []);
 
@@ -40,7 +40,7 @@ export const Home = () =>  {
     api
       .get(`breed/${breed}/images/random`)
       .then(response => response.data.message)
-      .catch(error => console.log(error.response));
+      .catch(error => console.log(error.response.data.message));
 
   const handleAddDog = async e => {
     e.preventDefault();
@@ -53,15 +53,11 @@ export const Home = () =>  {
       img: dogImage
     };
 
-    let listDog = dogsList;
-
-    listDog.push(newDogs);
-
+    setDogsList(dogsList => [...dogsList, newDogs]);
     setDogName('');
-    setDogsList(listDog);
     setSelectedValue('');
 
-    localStorage.setItem("dogs", JSON.stringify(listDog));
+    localStorage.setItem("dogs", JSON.stringify(dogsList));
   };
 
   return (
@@ -95,7 +91,7 @@ export const Home = () =>  {
         </select>
         <button type="submit" disabled={!dogName}>save</button>
       </Form>
-      <DogsList dogsList={dogsList} />
+      <DogsList dogsList={dogsList} setDogsList={setDogsList}/>
     </>
   );
 }

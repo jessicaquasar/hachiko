@@ -4,22 +4,31 @@ import PropTypes from "prop-types";
 import doggyImage from "../../assets/doggy.png";
 import { Container, Dogs } from "./styles";
 
-const DogsL = ({ dogsList }) => (
-  <Container>
-    {dogsList.map((dog, index) => (
-      <Dogs key={index}>
-        <div>
-          <img src={dog.img || doggyImage} alt={dog?.name} />
-          <strong>{(dog?.name).toUpperCase()}</strong>
-          <small>{dog?.breed}</small>
-          <small>{Intl.DateTimeFormat("pt-BR").format(dog?.date)}</small>
-        </div>
-      </Dogs>
-    ))}
-  </Container>
-);
+const DogsList = ({ dogsList, setDogsList }) => {
 
-DogsL.propTypes = {
+  function handleRemoveDog(dog) {
+    let doggy = dog;
+    setDogsList(dogsList.filter((dog)=>(dog.name !== doggy)))
+  }
+
+  return (
+    <Container>
+      {dogsList.map((dog, index) => (
+        <Dogs key={index}>
+          <li>
+            <button onClick={() => handleRemoveDog(dog.name)}>x</button>
+            <img src={dog.img || doggyImage} alt={dog?.name} />
+            <strong>{(dog?.name).toUpperCase()}</strong>
+            <small>{dog?.breed}</small>
+            <small>{Intl.DateTimeFormat("pt-BR").format(dog?.date)}</small>
+          </li>
+        </Dogs>
+      ))}
+    </Container>
+  )
+};
+
+DogsList.propTypes = {
   dogsList: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
@@ -27,7 +36,8 @@ DogsL.propTypes = {
       breed: PropTypes.string,
       date: PropTypes.date
     })
-  ).isRequired
+  ).isRequired,
+  handleRemoveDog: PropTypes.func
 };
 
-export default DogsL;
+export default DogsList;
