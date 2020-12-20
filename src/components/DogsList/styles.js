@@ -24,6 +24,7 @@ export const Dogs = styled.ul`
     display: flex;
     flex-direction: column;
     padding: 30px;
+    word-break: break-word;
 
     button {
       background: none;
@@ -40,7 +41,9 @@ export const Dogs = styled.ul`
     img {
       border-radius: 8px;
       height: auto;
-      width: 100%;
+      max-height:200px;
+      max-width:220px;
+      width: auto;
     }
 
     strong {
