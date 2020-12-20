@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import api from "../../services/api";
+import { api } from "../../services/api";
 import { Header, Form } from "./styles";
 import doggyImage from "../../assets/doggy.png";
-import DogsList from "../../components/DogsList";
+import { DogsList } from "../../components/DogsList";
 
 export const Home = () =>  {
 
@@ -57,7 +57,7 @@ export const Home = () =>  {
     setDogName('');
     setSelectedValue('');
 
-    localStorage.setItem("dogs", JSON.stringify(dogsList));
+    localStorage.setItem("dogs", JSON.stringify(...dogsList));
   };
 
   return (

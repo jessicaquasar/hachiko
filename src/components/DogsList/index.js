@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import doggyImage from "../../assets/doggy.png";
 import { Container, Dogs } from "./styles";
 
-const DogsList = ({ dogsList, setDogsList }) => {
+export const DogsList = ({ dogsList, setDogsList }) => {
 
   function handleRemoveDog(dog) {
     let doggy = dog;
@@ -16,8 +16,8 @@ const DogsList = ({ dogsList, setDogsList }) => {
       {dogsList.map((dog, index) => (
         <Dogs key={index}>
           <li>
-            <button onClick={() => handleRemoveDog(dog.name)}>x</button>
-            <img src={dog.img || doggyImage} alt={dog?.name} />
+            <button onClick={() => handleRemoveDog(dog?.name)}>x</button>
+            <img src={dog?.img || doggyImage} alt={dog?.breed} />
             <strong>{(dog?.name).toUpperCase()}</strong>
             <small>{dog?.breed}</small>
             <small>{Intl.DateTimeFormat("pt-BR").format(dog?.date)}</small>
@@ -39,5 +39,3 @@ DogsList.propTypes = {
   ).isRequired,
   handleRemoveDog: PropTypes.func
 };
-
-export default DogsList;
