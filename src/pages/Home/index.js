@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import { api } from "../../services/api";
 import { Header, Form } from "./styles";
 import doggyImage from "../../assets/doggy.png";
 import { DogsList } from "../../components/DogsList";
@@ -10,37 +9,30 @@ export const Home = () =>  {
   const [dogName, setDogName] = useState('');
   const [dogsList, setDogsList] = useState([]);
   const [selectedValue, setSelectedValue] = useState('');
+  const baseURL = "https://dog.ceo/api";
   const dogNameInput = useRef(null);
 
   useEffect(() => {
-    api
-      .get(`breeds/list/all`)
-      .then(response => {
-        const arrResult = Object.entries(response.data.message).map(breed => {
-          if (breed[1].length) {
-            return breed[1].map(b => `${breed[0]}-${b}`);
-          } else {
-            return [breed[0]];
-          }
-        });
-
-        const arrBreeds = arrResult.flatMap(breed => breed);
-
-        setBreeds(arrBreeds);
+    fetch(`${baseURL}/breeds/list/all`).then(response => response.json().then(data => {
+      const arrResult = Object.entries(data.message).map(breed => {
+        if (breed[1].length) return breed.map(b => `${breed[0]}-${b}`)
+        else return [breed[0]]
       })
-      .catch(error => console.log(error.response.data.message));
 
-  }, []);
+      const arrBreeds = arrResult.flatMap(breed => breed)
+
+      setBreeds(arrBreeds)
+    })).catch(error => console.log(error.data.message))
+  }, [])
 
   useEffect(() => {
     dogNameInput.current.focus();
   }, [dogName]);
 
   const handleBreeds = breed =>
-    api
-      .get(`breed/${breed}/images/random`)
-      .then(response => response.data.message)
-      .catch(error => console.log(error.response.data.message));
+    fetch(`${baseURL}/breed/${breed}/images/random`)
+      .then(response => response.json().then(data => data.message))
+      .catch(error => console.log(error.data.message));
 
   const handleAddDog = async e => {
     e.preventDefault();

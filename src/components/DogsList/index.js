@@ -16,7 +16,7 @@ export const DogsList = ({ dogsList, setDogsList }) => {
       {dogsList.map((dog, index) => (
         <Dogs key={index}>
           <li>
-            <button onClick={() => handleRemoveDog(dog?.name)}>x</button>
+            <button onClick={() => handleRemoveDog(dog?.name)} aria-label="remove dog">x</button>
             <img src={dog?.img || doggyImage} alt={dog?.breed} />
             <strong>{(dog?.name).toUpperCase()}</strong>
             <small>{dog?.breed}</small>
