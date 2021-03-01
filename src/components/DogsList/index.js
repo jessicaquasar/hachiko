@@ -17,7 +17,7 @@ export const DogsList = ({ dogsList, setDogsList }) => {
         <Dogs key={index}>
           <li>
             <button onClick={() => handleRemoveDog(dog?.name)} aria-label="remove dog">x</button>
-            <img src={dog?.img || doggyImage} alt={dog?.breed} />
+            <img src={dog?.img !== "Breed not found (master breed does not exist)" ? dog.img : doggyImage} alt={dog?.breed} />
             <strong>{(dog?.name).toUpperCase()}</strong>
             <small>{dog?.breed}</small>
             <small>{Intl.DateTimeFormat("pt-BR").format(dog?.date)}</small>

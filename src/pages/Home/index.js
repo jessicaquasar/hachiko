@@ -15,7 +15,7 @@ export const Home = () =>  {
   useEffect(() => {
     fetch(`${baseURL}/breeds/list/all`).then(response => response.json().then(data => {
       const arrResult = Object.entries(data.message).map(breed => {
-        if (breed[1].length) return breed.map(b => `${breed[0]}-${b}`)
+        if (breed[1].length) return breed[1].map(b => `${breed[0]}-${b}`)
         else return [breed[0]]
       })
 
