@@ -21,7 +21,7 @@ export const Header = styled.div`
   padding: 0 12px;
 
   @media all and (max-width: 425px) {
-    justify-content: space-evenly;
+    display: grid;
   }
 
   label {
@@ -47,7 +47,6 @@ export const Header = styled.div`
     @media all and (max-width: 425px) {
       margin-bottom: 10px;
       margin-right: 0;
-      width: 60vw;
     }
   }
 
@@ -69,14 +68,13 @@ export const Header = styled.div`
 
     @media all and (max-width: 425px) {
       margin-left: 0;
-      width: 100%;
     }
   }
 
   select {
     appearance: none;
     background-color: #e9ecf2;
-    border: 2px solid #aaadbf;
+    border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 1em;
@@ -87,9 +85,8 @@ export const Header = styled.div`
     width: 232px;
 
     @media all and (max-width: 425px) {
-      margin-bottom: 10px;
+      margin-bottom: 16px;
       margin-left: 0;
-      width: 62vw;
     }
   }
 `;

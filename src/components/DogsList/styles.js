@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.section`
+export const Container = styled.ul`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, auto));
   justify-content: center;
@@ -8,7 +8,7 @@ export const Container = styled.section`
   margin-top: 50px;
 `;
 
-export const Dogs = styled.ul`
+export const Dogs = styled.li`
   background-color: #fff;
   border-radius: 4px;
   display: flex;
@@ -19,7 +19,7 @@ export const Dogs = styled.ul`
   text-align: center;
   width: 250px;
 
-  li {
+  div {
     align-items: center;
     display: flex;
     flex-direction: column;

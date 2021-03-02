@@ -29,6 +29,10 @@ export const Home = () =>  {
     dogNameInput.current.focus();
   }, [dogName]);
 
+  useEffect(() => {
+    localStorage.setItem("dogs", JSON.stringify(dogsList));
+  },[dogsList])
+
   const handleBreeds = breed =>
     fetch(`${baseURL}/breed/${breed}/images/random`)
       .then(response => response.json().then(data => data.message))
@@ -48,8 +52,6 @@ export const Home = () =>  {
     setDogsList(dogsList => [...dogsList, newDogs]);
     setDogName('');
     setSelectedValue('');
-
-    localStorage.setItem("dogs", JSON.stringify(...dogsList));
   };
 
   return (
@@ -59,7 +61,7 @@ export const Home = () =>  {
         <h1>Dogs register</h1>
       </Header>
       <Form onSubmit={e => handleAddDog(e)}>
-        <label>dog name:</label>
+        <label aria-label="dog name">dog name:</label>
         <input
           ref={dogNameInput}
           type="text"
@@ -67,8 +69,9 @@ export const Home = () =>  {
           value={dogName}
           onChange={e => setDogName(e.target.value)}
         />
-        <label>dog breed:</label>
+        <label aria-label="dog breed">dog breed:</label>
         <select
+          aria-label="select dog breed"
           value={selectedValue}
           onChange={e => setSelectedValue(e.target.value)}
         >
@@ -81,7 +84,7 @@ export const Home = () =>  {
             );
           })}
         </select>
-        <button type="submit" disabled={!dogName}>save</button>
+        <button type="submit" disabled={!dogName || !selectedValue} aria-label="save dog">save</button>
       </Form>
       <DogsList dogsList={dogsList} setDogsList={setDogsList}/>
     </>

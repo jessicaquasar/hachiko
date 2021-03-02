@@ -15,13 +15,13 @@ export const DogsList = ({ dogsList, setDogsList }) => {
     <Container>
       {dogsList.map((dog, index) => (
         <Dogs key={index}>
-          <li>
+          <div>
             <button onClick={() => handleRemoveDog(dog?.name)} aria-label="remove dog">x</button>
             <img src={dog?.img !== "Breed not found (master breed does not exist)" ? dog.img : doggyImage} alt={dog?.breed} />
-            <strong>{(dog?.name).toUpperCase()}</strong>
-            <small>{dog?.breed}</small>
+            <strong aria-label={dog?.name}>{(dog?.name).toUpperCase()}</strong>
+            <small aria-label={dog?.breed}>{dog?.breed}</small>
             <small>{Intl.DateTimeFormat("pt-BR").format(dog?.date)}</small>
-          </li>
+          </div>
         </Dogs>
       ))}
     </Container>
